@@ -21,7 +21,7 @@ class GroupMailer < ApplicationMailer
     	@group = group
     	@datetime = DateTime.now
     	@admin = admin
-    	mail to: @admin.email, bcc: "biomodelos@humboldt.org.co", subject: "BioModelos: Un usuario quiere unirse a tu grupo " + @group.name 
+    	mail to: @admin.email, bcc: "spatsel.cci@gmail.com", subject: "BioModelos: Un usuario quiere unirse a tu grupo " + @group.name 
   	end
 
     def user_invitation(emails, group, admin, message)

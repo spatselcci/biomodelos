@@ -56,3 +56,7 @@ end
 
 # Added at 2017-09-21 13:51:12 -0500 by valentina:
 gem "pg", "~> 0.21.0"
+
+
+# Added by Sasha
+gem 'tzinfo-data'
