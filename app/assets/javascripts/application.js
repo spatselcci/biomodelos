@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 
-//= require typeahead.js/dist/typeahead.bundle.min.js
 //= require custom_select
 //= require utils.js
 //= require leaflet/dist/leaflet-src
