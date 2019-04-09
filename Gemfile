@@ -60,3 +60,6 @@ gem "pg", "~> 0.21.0"
 
 # Added by Sasha
 gem 'tzinfo-data'
+
+
+gem 'angularjs-rails', '~> 1.5', '>= 1.5.6'
