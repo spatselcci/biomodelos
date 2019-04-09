@@ -36,5 +36,7 @@ module BioModelosV2
       end if File.exists?(env_file)
     end
 
+    config.assets.initialize_on_precompile = false
+
   end
 end
