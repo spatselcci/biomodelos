@@ -21,7 +21,11 @@ var _speciesFunctionsModule = function(){
 }();
 
 $(document).ready(function(){
-
+  jQuery.ajaxPrefilter(function(options) {
+    if (options.crossDomain && jQuery.support.cors) {
+        options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+    }
+});
 
 	/*
 	* Advanced search filters
@@ -58,7 +62,7 @@ $(document).ready(function(){
                       categories.push('Valid');
          });
 		var bio_locale = $("#locale_field").val();
-		$.post( "/" + bio_locale + "/species/filter", {bmclasses: bmclasses, categories: categories});
+		$.post( "http://biomodelos.humboldt.org.co/" + bio_locale + "/species/filter", {bmclasses: bmclasses, categories: categories});
 	}
 
 	$(".cajasearch").on("click"," .sppbtn input[type='checkbox']", add_species_filters);
@@ -205,7 +209,7 @@ $(document).ready(function(){
 
 	$("#edit_tools_box").on("click","#btnPauseEdition",function(e){
 		e.preventDefault();
-		$.post("/users_layers/pause_layer", {
+		$.post("http://biomodelos.humboldt.org.co/users_layers/pause_layer", {
 				id: $("#layer_id_field").val(),
 		    	species_id: $("#species_id_field").val(),
 		    	threshold: angular.element($("#visCntrl")).scope().corteSlider.value,
@@ -220,7 +224,7 @@ $(document).ready(function(){
 			if(e){
 				$.ajax({
 		    		type: 'POST',
-		    		url: "/users_layers/send_layer",
+		    		url: "http://biomodelos.humboldt.org.co/users_layers/send_layer",
 		    		data: {
 		    			id: $("#layer_id_field").val(),
 		    			species_id: $("#species_id_field").val(),
@@ -290,7 +294,7 @@ $(document).ready(function(){
   			else
   				visualizeFilters.push("");
   		});
-  		$.post( "/records/edit_record", { species_id: $("#species_id_field").val()}).done(function(data) {
+  		$.post( "http://biomodelos.humboldt.org.co/records/edit_record", { species_id: $("#species_id_field").val()}).done(function(data) {
     		_BioModelosVisorModule.filterRecords(findByFilters, visualizeFilters, yearFilters, monthFilters, data);
   		});
 	});
@@ -301,7 +305,7 @@ $(document).ready(function(){
 	$("#limpiarBtn").click(function(e){
 		_speciesFunctionsModule.resetRecordsFilters();
 		//Reset data
-		$.post( "/records/edit_record", { species_id: $("#species_id_field").val()}).done(function(data) {
+		$.post( "http://biomodelos.humboldt.org.co/records/edit_record", { species_id: $("#species_id_field").val()}).done(function(data) {
     		_BioModelosVisorModule.getSpeciesRecords($("#species_id_field").val(), data);
   		});
 	});
@@ -327,7 +331,7 @@ $(document).ready(function(){
 		_BioModelosVisorModule.loadEditionLayer();
 		$.ajax({
 		    type: 'POST',
-		    url: "/users_layers/load_layer",
+		    url: "http://biomodelos.humboldt.org.co/users_layers/load_layer",
 		    data: {
 		    	species_id: $("#species_id_field").val(),
 		    	new_map: event.data.isNewMap
@@ -365,7 +369,7 @@ $(document).ready(function(){
 		}
 		$.ajax({
 		    type: 'POST',
-		    url: "/" + $("#locale_field").val() + "/models/get_thresholds",
+		    url: "http://biomodelos.humboldt.org.co/" + $("#locale_field").val() + "/models/get_thresholds",
 		    data: {
 		    	species_id: $("#species_id_field").val(),
 		    }
@@ -393,7 +397,7 @@ $(document).ready(function(){
 		}
 		$.ajax({
 		    type: 'POST',
-		    url: "/" + $("#locale_field").val() + "/models/get_hypotheses",
+		    url: "http://biomodelos.humboldt.org.co/" + $("#locale_field").val() + "/models/get_hypotheses",
 		    data: {
 		    	species_id: $("#species_id_field").val(),
 		    }
@@ -407,7 +411,7 @@ $(document).ready(function(){
 		/* TODO clean layers */
 		$.ajax({
 		    type: 'POST',
-		    url: "/" + $("#locale_field").val() + "/species/species_info",
+		    url: "http://biomodelos.humboldt.org.co/" + $("#locale_field").val() + "/species/species_info",
 		    data: {
 		    	species_id: $("#species_id_field").val(),
 		    }
@@ -452,7 +456,7 @@ $(document).ready(function(){
   	});
 
   	function _refreshSpeciesRecords(){
-  		$.post( "/records/edit_record", { species_id: $("#species_id_field").val()}).done(function(data) {
+  		$.post( "http://biomodelos.humboldt.org.co/records/edit_record", { species_id: $("#species_id_field").val()}).done(function(data) {
   			_BioModelosVisorModule.getSpeciesRecords($("#species_id_field").val(), data);
   		});
   	}
@@ -510,7 +514,7 @@ $(document).ready(function(){
 			alertify.alert(response);
 		}
 		else{
-			$.post( "/records/update_record", data)
+			$.post( "http://biomodelos.humboldt.org.co/records/update_record", data)
   				.done(function() {
     				_refreshSpeciesRecords();
 					alertify.alert("Su edición se ha realizado con éxito");
@@ -634,7 +638,7 @@ $(document).ready(function(){
 			alertify.alert(response);
 		}
 		else{
-			$.post( "/records/new_record", data)
+			$.post( "http://biomodelos.humboldt.org.co/records/new_record", data)
   				.done(function() {
     				_BioModelosVisorModule.cancelAddPoint();
 					_refreshSpeciesRecords();
@@ -656,7 +660,7 @@ $(document).ready(function(){
 
       	$.ajax({
           type: "POST",
-          url: "/eco_variables/add_ecological_variable",
+          url: "http://biomodelos.humboldt.org.co/eco_variables/add_ecological_variable",
           data: { species_id: $("#species_id_field").val(), eco_variable_id: box_id, selected: eco_var_val },
           error: function( jqXHR, textStatus, error ) {
             isError = true;

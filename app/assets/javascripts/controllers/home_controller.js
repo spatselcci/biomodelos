@@ -1,5 +1,9 @@
 $(document).ready(function(){
-
+  jQuery.ajaxPrefilter(function(options) {
+    if (options.crossDomain && jQuery.support.cors) {
+        options.url = 'https://cors-anywhere.herokuapp.com/' + options.url;
+    }
+});
 /*
 * Autocomplete function using typeahead.js library
 */
@@ -96,7 +100,7 @@ var typeahead_f = function(){
 
 
   var google_charts_f = function(){
-    $.post( "/models/models_stats").done(function(data) {
+    $.post( "http://biomodelos.humboldt.org.co/models/models_stats").done(function(data) {
       _drawCharts(data);
     });
 
