@@ -62,7 +62,10 @@ $(document).ready(function(){
                       categories.push('Valid');
          });
 		var bio_locale = $("#locale_field").val();
-		$.post( "http://biomodelos.humboldt.org.co/" + bio_locale + "/species/filter", {bmclasses: bmclasses, categories: categories});
+		$.post( "http://biomodelos.humboldt.org.co/" + bio_locale + "/species/filter", {bmclasses: bmclasses, categories: categories}).then(function(data) {
+			console.log(data)
+			return eval(data)
+		});
 	}
 
 	$(".cajasearch").on("click"," .sppbtn input[type='checkbox']", add_species_filters);

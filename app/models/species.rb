@@ -5,7 +5,7 @@ class Species
 	# has_many :tasks
 
 	def self.find_name(taxID)
-   		res = JSON.parse(get('http://biomodelos.humboldt.org.co/' + taxID.to_s).body)
+   		res = JSON.parse(get('/' + taxID.to_s).body)
    		if !res.blank?
    			res = res[0]["acceptedNameUsage"]
    		else
@@ -15,24 +15,24 @@ class Species
 	end
 
 	def self.find_names(taxIDList)
-		 res = JSON.parse(get('http://biomodelos.humboldt.org.co?speciesIn=' + taxIDList.join(',')).body)
+		 res = JSON.parse(get('?speciesIn=' + taxIDList.join(',')).body)
 		return res
 	end
 
 	def self.records_number(taxID)
-		JSON.parse(get('http://biomodelos.humboldt.org.co/' + taxID.to_s).body)[0]["totalRecords"]
+		JSON.parse(get('/' + taxID.to_s).body)[0]["totalRecords"]
 	end
 
 	def self.info(taxID)
-		JSON.parse(get('http://biomodelos.humboldt.org.co/' + taxID.to_s).body)
+		JSON.parse(get('/' + taxID.to_s).body)
 	end
 
 	def self.records(taxID)
-		JSON.parse(get('http://biomodelos.humboldt.org.co/records/' + taxID.to_s).body)
+		JSON.parse(get('/records/' + taxID.to_s).body)
 	end
 
 	def self.group_records(taxID)
-		JSON.parse(get('http://biomodelos.humboldt.org.co/records/group/' + taxID.to_s).body)
+		JSON.parse(get('/records/group/' + taxID.to_s).body)
 	end
 
 	def self.filter(params)
