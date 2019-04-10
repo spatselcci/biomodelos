@@ -10,9 +10,13 @@
           $(document).ready(function(){
 	          $.ajax({
 	                          type: "POST",
-	                          url: "/" + $("#locale_field").val() + "/species/set_species",
+	                          url: "http://biomodelos.humboldt.org.co/" + $("#locale_field").val() + "/species/set_species",
 	                          data: { species_id: <%=j params[:species_id]%> }
-	          });
+	          }).then(function(data) {
+				var overlay = data.replace(`$.post( "/"+ $("#locale_field").val() +"/models/load_initial_model", { species_id: 7020});`, `$.post( "http://biomodelos.humboldt.org.co/"+ $("#locale_field").val() +"/models/load_initial_model", { species_id: 7020}).then(function(json) {console.log(json); return eval(json)});`)
+				console.log(overlay)
+				return eval(overlay)
+		  	  });
 	      });
       </script>
 <% end %>
