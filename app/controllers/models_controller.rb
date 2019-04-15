@@ -35,6 +35,8 @@ class ModelsController < ApplicationController
 		end
 
 		respond_to do |format|
+				puts "FORMAT", format
+				puts "FORMATJS", format.js
 		    format.js
 		end
 	end

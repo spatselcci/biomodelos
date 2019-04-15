@@ -5,7 +5,8 @@ class Species
 	# has_many :tasks
 
 	def self.find_name(taxID)
-   		res = JSON.parse(get('/' + taxID.to_s).body)
+		   res = JSON.parse(get('/' + taxID.to_s).body)
+		   puts "RES", res
    		if !res.blank?
    			res = res[0]["acceptedNameUsage"]
    		else
@@ -16,6 +17,7 @@ class Species
 
 	def self.find_names(taxIDList)
 		 res = JSON.parse(get('?speciesIn=' + taxIDList.join(',')).body)
+		 puts "RES", res
 		return res
 	end
 
